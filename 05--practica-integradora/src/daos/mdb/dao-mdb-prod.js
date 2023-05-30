@@ -1,4 +1,4 @@
-import { modelProd } from "./models/model-prod";
+import { modelProd } from "./models/model-prod.js";
 
 export class DaoMDBProduct {
     constructor() { };

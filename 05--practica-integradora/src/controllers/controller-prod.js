@@ -1,4 +1,4 @@
-import { ServiceProducts } from "../services/service-prod";
+import { ServiceProducts } from "../services/service-prod.js";
 const svcProd = new ServiceProducts();
 
 export class ControllerProducts {

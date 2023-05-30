@@ -4,7 +4,7 @@ const connectionString = 'mongodb+srv://pabloalvarez4284:admin4284@personalclust
 
 try {
     await mongoose.connect(connectionString)
-    console.log('Connection with database established successfully')
+    console.log('Connection with MongoDB Atlas database established successfully')
 } catch (err) {
     console.log(err)
 }

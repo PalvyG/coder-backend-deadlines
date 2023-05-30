@@ -1,5 +1,5 @@
 import { DaoMDBProduct } from '../daos/mdb/dao-mdb-prod.js'
-const daoProd = new DaoMDBProduct();
+export const daoProd = new DaoMDBProduct();
 
 export class ServiceProducts {
     constructor() {}
