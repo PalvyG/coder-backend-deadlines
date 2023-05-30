@@ -1,8 +1,8 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
-import cartsRouter from './routes/carts-router.js';
-import viewsRouter from './routes/views-router.js';
-import productsRouter from './routes/products-router.js';
+import cartsRouter from './routes/router-cart.js';
+import viewsRouter from './routes/router-views.js';
+import productsRouter from './routes/router-prod.js';
 import { daoFsProduct } from './daos/fs/dao-fs-prod.js';
 import { __dirname } from './path.js';
 import { Server } from 'socket.io';

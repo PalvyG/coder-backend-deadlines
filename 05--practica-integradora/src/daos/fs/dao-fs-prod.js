@@ -57,7 +57,7 @@ class DaoFSProduct {
         } catch (err) { console.log(err) }
     }
 
-    async removeProduct(id) {
+    async deleteProduct(id) {
         try {
             const products = await fs.promises.readFile(path, 'utf-8')
             const productsJS = JSON.parse(products)
@@ -71,7 +71,7 @@ class DaoFSProduct {
         } catch (err) { console.log(err) }
     }
 
-    async removeAllProducts() {
+    async deleteAllProducts() {
         try {
             if(fs.existsSync(path)){
                 await fs.promises.unlink(path)

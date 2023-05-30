@@ -23,9 +23,7 @@ form.onsubmit = (e) =>{
     const stock = Number(Math.floor(inputStock.value));
     const cat = 'none';
     const status = true;
-    const rng = Math.floor(Math.random()*10000000 + 10000000);
-    const code = rng.toString();
-    const obj = {title, desc, price, stock, cat, status, code}
+    const obj = {title, desc, price, stock, cat, status}
     socket.emit('newProduct', obj);
     socket.on('arrayUpdate', (array) =>{
         let productsArray = '';

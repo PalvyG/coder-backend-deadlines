@@ -65,7 +65,7 @@ router.delete('/:pid', async (req, res) => {
         const productFound = await daoFsProduct.getProductById(Number(pid))
         if (productFound) {
             res.status(200).json({ message: `(i) "${productFound.title}" (ID: ${Number(pid)}) was deleted successfully.` })
-            await daoFsProduct.removeProduct(Number(pid))
+            await daoFsProduct.deleteProduct(Number(pid))
         } else {
             res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${Number(pid)}).` })
         }
@@ -77,7 +77,7 @@ router.delete('/:pid', async (req, res) => {
 
 router.delete('/', async (req, res) => {
     try {
-        await daoFsProduct.removeAllProducts();
+        await daoFsProduct.deleteAllProducts();
         res.status(200).json({ message: "(i) All products deleted successfully" })
     } catch (err) {
         res.status(400).json({ message: err.message })

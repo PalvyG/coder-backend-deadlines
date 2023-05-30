@@ -1,7 +1,7 @@
 export const productValidator = (req, res, next) => {
     try {        
         const prod = req.body;
-        if (prod.title !== undefined && prod.desc !== undefined && prod.price !== undefined && prod.stock !== undefined && prod.cat !== undefined && prod.status !== undefined && prod.code !== undefined) {
+        if (prod.title !== undefined && prod.desc !== undefined && prod.price !== undefined && prod.stock !== undefined && prod.cat !== undefined && prod.status !== undefined) {
             next()
         } else {
             res.status(404).json({
