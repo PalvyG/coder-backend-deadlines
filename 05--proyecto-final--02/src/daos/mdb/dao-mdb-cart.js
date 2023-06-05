@@ -1,9 +1,6 @@
 import { modelCart } from './models/model-cart.js'
 import { modelProd } from './models/model-prod.js'
 
-const pathCarts = './carts.json'
-const pathProducts = './products.json'
-
 export class DaoMDBCart {
     constructor() { };
     async createCart() {
@@ -29,9 +26,11 @@ export class DaoMDBCart {
 
     async addToCart(cid, pid) {
         try {
+            const cart = await modelCart.findById({ _id: cid });
+            const prod = await modelProd.findById({ _id: pid });
+            cart.products.push(prod);
+            cart.save();
             const cartUpd = await modelCart.findById({ _id: cid });
-            cartUpd.products.push(pid);
-            cartUpd.save();
             return cartUpd;
         } catch (err) { console.log(err) }
     }

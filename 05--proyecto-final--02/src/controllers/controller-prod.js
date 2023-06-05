@@ -6,14 +6,19 @@ export class ControllerProducts {
 
     async getProdCtrl(req, res, next) {
         try {
-            const { limit } = req.query
-            const docs = await svcProd.getProdSvc();
-            if (limit >= 0) {
-                const limitDocs = docs.slice(0, limit)
-                res.status(200).json(limitDocs)
-            } else {
-                res.status(200).json(docs)
-            }
+            const { page, limit } = req.query
+            const result = await svcProd.getProdSvc(page, limit);
+            const nextPage = result.hasNextPage ? `http://localhost:8080/users?page=${result.nextPage}` : null
+            const prevPage = result.hasPrevPage ? `http://localhost:8080/users?page=${result.prevPage}` : null
+            res.json({
+                results: result.docs,
+                info: {
+                    count: result.totalDocs,
+                    pages: result.totalPages,
+                    nextPage,
+                    prevPage
+                }
+            });
         } catch (err) { next(err) }
     }
 

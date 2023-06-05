@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2';
+
 const schemaProd = new Schema({
     title: {type: String, required: true},
     desc: {type: String, default: 'No description provided.'},
@@ -7,6 +9,8 @@ const schemaProd = new Schema({
     cat: {type: String, default: 'other'},
     status: {type: Boolean, default: true},
 })
+
+schemaProd.plugin(mongoosePaginate)
 
 export const modelProd = model(
     'products',

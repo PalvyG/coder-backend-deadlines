@@ -21,8 +21,7 @@ export class ControllerCarts {
         try {
             const { cid } = req.params
             const doc = await svcCart.getCartByIdSvc(cid)
-            doc ? res.status(200).json({ message: '(i) Cart found successfully!', product }) : res.status(404).json({ message: '(!) Cart not found by the controller.' })
-            res.json(doc)
+            doc ? res.status(200).json({ message: '(i) Cart found successfully!', cart: doc }) : res.status(404).json({ message: '(!) Cart not found by the controller.' })
         } catch (err) { next(err) }
     }
 
@@ -40,7 +39,8 @@ export class ControllerCarts {
             if (cart) {
                 if (pid) {
                     await svcCart.addToCartSvc(cid, pid)
-                    res.status(200).json({ message: `(i) Product was successfully added to cart! (ID: ${pid})`, update: cart })
+                    const cartUpd = await svcCart.getCartByIdSvc(cid)
+                    res.status(200).json({ message: `(i) Product was successfully added to cart! (ID: ${pid})`, update: cartUpd })
                 } else {
                     res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${pid}).` })
                 }

@@ -8,7 +8,7 @@ const schemaCart = new Schema({
 })
 
 schemaCart.pre('find', function () {
-    this.populate('products')
+    this.populate('products', ['_id', 'qty'])
 })
 
 export const modelCart = model(

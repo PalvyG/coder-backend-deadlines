@@ -21,7 +21,7 @@ form.onsubmit = (e) =>{
     const desc = 'No description provided.'
     const price = Number(Math.floor(inputPrice.value));
     const stock = Number(Math.floor(inputStock.value));
-    const cat = 'none';
+    const cat = 'other';
     const status = true;
     const obj = {title, desc, price, stock, cat, status}
     socket.emit('newProduct', obj);

@@ -10,9 +10,9 @@ export class DaoMDBProduct {
         } catch (err) { console.log(err) }
     }
 
-    async getProducts() {
+    async getProducts(page = 1, limit = 5) {
         try {
-            const response = await modelProd.find({})
+            const response = await modelProd.paginate({}, { page, limit })
             return response
         } catch (err) { console.log(err) }
     }
