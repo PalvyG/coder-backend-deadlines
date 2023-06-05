@@ -55,7 +55,7 @@ export class ControllerProducts {
             const doc = await svcProd.getProdByIdSvc(pid)
             if (doc) {
                 res.status(200).json({ message: `(i) "${doc.title}" was deleted successfully. (ID: ${pid})` })
-                await daoFsProduct.deleteProduct(pid)
+                await svcProd.deleteProdSvc(pid)
             } else {
                 res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${pid}).` })
             }
