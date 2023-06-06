@@ -28,7 +28,21 @@ export class DaoMDBCart {
         try {
             const cart = await modelCart.findById({ _id: cid });
             const prod = await modelProd.findById({ _id: pid });
-            cart.products.push(prod);
+            cart.products.push(prod)
+            cart.save();
+            const cartUpd = await modelCart.findById({ _id: cid });
+            return cartUpd;
+        } catch (err) { console.log(err) }
+    }
+
+    async deleteProdFromCart(cid, pid) {
+        try {
+            const cart = await modelCart.findById({ _id: cid });
+            const prod = await modelProd.findById({ _id: pid });
+            const index = cart.products.findIndex((obj) => obj == prod._id)
+            console.log(index)
+            const splice = cart.products.splice(index, 1);
+            console.log(splice)
             cart.save();
             const cartUpd = await modelCart.findById({ _id: cid });
             return cartUpd;

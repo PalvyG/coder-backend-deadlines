@@ -38,6 +38,18 @@ export class ServiceCarts {
         } catch (err) { console.log(err) }
     }
 
+    async deleteProdFromCartSvc(cid,pid) {
+        try {
+            const oldDoc = await daoCart.getCartById(cid)
+            if (!oldDoc) {
+                throw new Error(`(!) Cart not found by the service.`)
+            } else {
+                const newDoc = await daoCart.deleteProdFromCart(cid, pid);
+                return newDoc
+            }
+        } catch (err) { console.log(err) }
+    }
+
     async deleteCartSvc(id) {
         try {
             const doc = await daoCart.deleteCart(id)
@@ -47,7 +59,7 @@ export class ServiceCarts {
 
     async deleteAllCartSvc() {
         try {
-            await daoCart.deleteAllCarts()
+            await daoCart.deleteAllCart()
         } catch (err) { console.log(err) }
     }
 }

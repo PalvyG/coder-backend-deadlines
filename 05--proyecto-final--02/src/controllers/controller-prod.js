@@ -8,15 +8,21 @@ export class ControllerProducts {
         try {
             const { page, limit } = req.query
             const result = await svcProd.getProdSvc(page, limit);
-            const nextPage = result.hasNextPage ? `http://localhost:8080/users?page=${result.nextPage}` : null
-            const prevPage = result.hasPrevPage ? `http://localhost:8080/users?page=${result.prevPage}` : null
+            const prevPageLink = result.hasPrevPage ? `http://localhost:8080/users?page=${result.prevPage}` : null
+            const nextPageLink = result.hasNextPage ? `http://localhost:8080/users?page=${result.nextPage}` : null
             res.json({
-                results: result.docs,
+                status: result ? 'success' : 'error',
+                payload: result.docs,
                 info: {
-                    count: result.totalDocs,
-                    pages: result.totalPages,
-                    nextPage,
-                    prevPage
+                    totalDocs: result.totalDocs,
+                    totalPages: result.totalPages,
+                    currPage: Number(page),
+                    prevPage: result.prevPage,
+                    nextPage: result.nextPage,
+                    hasPrevPage: result.hasPrevPage,
+                    hasNextPage: result.hasNextPage,
+                    prevPageLink,
+                    nextPageLink
                 }
             });
         } catch (err) { next(err) }

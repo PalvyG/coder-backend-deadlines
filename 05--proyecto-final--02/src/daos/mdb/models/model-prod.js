@@ -8,6 +8,7 @@ const schemaProd = new Schema({
     stock: {type: Number, required: true},
     cat: {type: String, default: 'other'},
     status: {type: Boolean, default: true},
+    qty: {type: Number}
 })
 
 schemaProd.plugin(mongoosePaginate)
