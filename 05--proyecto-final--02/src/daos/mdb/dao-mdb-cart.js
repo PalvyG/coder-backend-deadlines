@@ -76,6 +76,18 @@ export class DaoMDBCart {
         } catch (err) { console.log(err) }
     }
 
+    async deleteAllProdFromCart(id) {
+        try {
+            await modelCart.updateOne({_id: id}, {
+                $set: {
+                    products: [],
+                }
+            })
+            const cart = await modelCart.findById(id)
+            return cart
+        } catch (err) { console.log(err) }
+    }
+
     async deleteCart(id) {
         try {
             const response = await modelCart.findByIdAndDelete({ _id: id });

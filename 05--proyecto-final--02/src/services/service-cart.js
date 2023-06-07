@@ -60,6 +60,16 @@ export class ServiceCarts {
         } catch (err) { console.log(err) }
     }
 
+    async deleteAllProdFromCartSvc(id) {
+        try {
+            const oldDoc = await daoCart.getCartById(id);
+            if (oldDoc) {
+                const newDoc = await daoCart.deleteAllProdFromCart(id);
+                return newDoc
+            }
+        } catch (err) { console.log(err) }
+    }
+
     async deleteCartSvc(id) {
         try {
             const doc = await daoCart.deleteCart(id)

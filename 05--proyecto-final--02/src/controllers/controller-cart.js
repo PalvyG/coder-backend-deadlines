@@ -54,12 +54,12 @@ export class ControllerCarts {
 
     async updateCartCtrl(req, res, next) {
         try {
-            const { id } = req.params;
+            const { cid } = req.params;
             const arr = req.body;
-            if (!id) {
-                res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${id}).` })
+            if (!cid) {
+                res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${cid}).` })
             } else {
-                const cart = await svcCart.updateCartSvc(id, arr)
+                const cart = await svcCart.updateCartSvc(cid, arr)
                 res.status(200).json({ message: `(i) Cart updated successfully!`, update: cart})
             }
         } catch (err) { next(err) }
@@ -79,6 +79,18 @@ export class ControllerCarts {
                 }
             } else {
                 res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${cid}).` })
+            }
+        } catch (err) { next(err) }
+    }
+
+    async deleteAllProdFromCartCtrl(req, res, next) {
+        try {
+            const { cid } = req.params;
+            if (!cid) {
+                res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${cid}).` })
+            } else {
+                const cart = await svcCart.deleteAllProdFromCartSvc(cid)
+                res.status(200).json({ message: `(i) All products removed from cart successfully.`, update: cart})
             }
         } catch (err) { next(err) }
     }
