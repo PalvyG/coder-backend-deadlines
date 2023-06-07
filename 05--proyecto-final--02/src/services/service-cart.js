@@ -38,7 +38,17 @@ export class ServiceCarts {
         } catch (err) { console.log(err) }
     }
 
-    async deleteProdFromCartSvc(cid,pid) {
+    async updateCartSvc(id, arr) {
+        try {
+            const oldDoc = await daoCart.getCartById(id);
+            if (oldDoc) {
+                const newDoc = await daoCart.updateCart(id, arr);
+                return newDoc
+            }
+        } catch (err) { console.log(err) }
+    }
+
+    async deleteProdFromCartSvc(cid, pid) {
         try {
             const oldDoc = await daoCart.getCartById(cid)
             if (!oldDoc) {

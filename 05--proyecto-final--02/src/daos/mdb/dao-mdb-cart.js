@@ -1,3 +1,4 @@
+import { model } from 'mongoose';
 import { modelCart } from './models/model-cart.js'
 import { modelProd } from './models/model-prod.js'
 
@@ -49,17 +50,29 @@ export class DaoMDBCart {
         } catch (err) { console.log(err) }
     }
 
+    async updateCart (id, arr) {
+        try {
+            await modelCart.updateOne({_id: id}, {
+                $set: {
+                    products: arr.products,
+                }
+            })
+            const cart = await modelCart.findById(id)
+            return cart
+        } catch (err) { console.log(err) }
+    }
+
     async deleteProdFromCart(cid, pid) {
         try {
             const cart = await modelCart.findById({ _id: cid });
             const prod = await modelProd.findById({ _id: pid });
-            const index = cart.products.findIndex((obj) => obj == prod._id)
-            console.log(index)
-            const splice = cart.products.splice(index, 1);
-            console.log(splice)
-            cart.save();
-            const cartUpd = await modelCart.findById({ _id: cid });
-            return cartUpd;
+            const index = cart.products.findIndex((obj) => obj._id.toString() == prod._id.toString())
+            if (index == 0 || index != -1) {
+                cart.products.splice(index, 1)
+                cart.save();
+                const cartUpd = await modelCart.findById({ _id: cid });
+                return cartUpd;
+            }
         } catch (err) { console.log(err) }
     }
 

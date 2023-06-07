@@ -52,6 +52,19 @@ export class ControllerCarts {
         } catch (err) { next(err) }
     }
 
+    async updateCartCtrl(req, res, next) {
+        try {
+            const { id } = req.params;
+            const arr = req.body;
+            if (!id) {
+                res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${id}).` })
+            } else {
+                const cart = await svcCart.updateCartSvc(id, arr)
+                res.status(200).json({ message: `(i) Cart updated successfully!`, update: cart})
+            }
+        } catch (err) { next(err) }
+    }
+
     async deleteProdFromCartCtrl(req, res, next) {
         try {
             const { cid, pid } = req.params
