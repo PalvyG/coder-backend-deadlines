@@ -28,7 +28,7 @@ export class DaoMDBCart {
         try {
             const cart = await modelCart.findById({ _id: cid });
             const prod = await modelProd.findById({ _id: pid });
-            const index = cart.products.findIndex((obj) => obj._id.toString() === prod._id.toString())
+            const index = cart.products.findIndex((obj) => obj._id.toString() == prod._id.toString())
             if (index == 0 || index != -1) {
                 const prodPush = {
                     ...prod._doc,
