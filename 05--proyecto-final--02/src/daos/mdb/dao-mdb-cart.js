@@ -24,12 +24,26 @@ export class DaoMDBCart {
         } catch (err) { console.log(err) }
     }
 
-    async addToCart(cid, pid) {
+    async addToCart(cid, pid, qty) {
         try {
             const cart = await modelCart.findById({ _id: cid });
             const prod = await modelProd.findById({ _id: pid });
-            cart.products.push(prod)
-            cart.save();
+            const index = cart.products.findIndex((obj) => obj._id.toString() === prod._id.toString())
+            if (index == 0 || index != -1) {
+                const prodPush = {
+                    ...prod._doc,
+                    qty: cart.products[index].qty + Number(qty)
+                }
+                cart.products.splice(index, 1, prodPush)
+                cart.save();
+            } else if (index == -1) {
+                const prodPush = {
+                    ...prod._doc,
+                    qty
+                }
+                cart.products.push(prodPush)
+                cart.save();
+            }
             const cartUpd = await modelCart.findById({ _id: cid });
             return cartUpd;
         } catch (err) { console.log(err) }

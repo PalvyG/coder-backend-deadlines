@@ -35,10 +35,12 @@ export class ControllerCarts {
     async addToCartCtrl(req, res, next) {
         try {
             const { cid, pid } = req.params
+            let { qty } = req.query
+            if (!qty) qty = 1
             const cart = await svcCart.getCartByIdSvc(cid)
             if (cart) {
                 if (pid) {
-                    await svcCart.addToCartSvc(cid, pid)
+                    await svcCart.addToCartSvc(cid, pid, qty)
                     const cartUpd = await svcCart.getCartByIdSvc(cid)
                     res.status(200).json({ message: `(i) Product was successfully added to cart! (ID: ${pid})`, update: cartUpd })
                 } else {

@@ -26,13 +26,13 @@ export class ServiceCarts {
         } catch (err) { console.log(err) }
     }
 
-    async addToCartSvc(cid, pid) {
+    async addToCartSvc(cid, pid, qty) {
         try {
             const oldDoc = await daoCart.getCartById(cid)
             if (!oldDoc) {
                 throw new Error(`(!) Cart not found by the service.`)
             } else {
-                const newDoc = await daoCart.addToCart(cid, pid);
+                const newDoc = await daoCart.addToCart(cid, pid, qty);
                 return newDoc
             }
         } catch (err) { console.log(err) }
