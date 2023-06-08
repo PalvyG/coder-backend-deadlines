@@ -3,10 +3,10 @@ export const daoProd = new DaoMDBProduct();
 
 export class ServiceProducts {
     constructor() {}
-    
-    async getProdSvc(page, limit) {
+
+    async getProdSvc(page, limit, sort, filter) {
         try {
-            const docs = await daoProd.getProducts(page, limit);
+            const docs = await daoProd.getProducts(page, limit, sort, filter);
             return docs
         } catch (err) { console.log(err) }
     }

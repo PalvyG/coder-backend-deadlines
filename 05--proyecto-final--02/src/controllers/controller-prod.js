@@ -6,8 +6,9 @@ export class ControllerProducts {
 
     async getProdCtrl(req, res, next) {
         try {
-            const { page, limit } = req.query
-            const result = await svcProd.getProdSvc(page, limit);
+            let { page, limit, sort, filter } = req.query
+            page == null ? page = 1 : page = page
+            const result = await svcProd.getProdSvc(page, limit, sort, filter);
             const prevPageLink = result.hasPrevPage ? `http://localhost:8080/users?page=${result.prevPage}` : null
             const nextPageLink = result.hasNextPage ? `http://localhost:8080/users?page=${result.nextPage}` : null
             res.json({
@@ -53,7 +54,7 @@ export class ControllerProducts {
             const oldDoc = await svcProd.getProdByIdSvc(pid)
             if (oldDoc) {
                 await svcProd.updateProdSvc(pid, newDoc)
-                res.status(200).json({ message: `(i) "${productFound.title}" (ID: ${pid}) was successfully updated!`, update: newDoc })
+                res.status(200).json({ message: `(i) "${newDoc.title}" (ID: ${pid}) was successfully updated!`, update: newDoc })
             } else {
                 res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${pid}).` })
             }

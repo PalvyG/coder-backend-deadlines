@@ -10,10 +10,15 @@ export class DaoMDBProduct {
         } catch (err) { console.log(err) }
     }
 
-    async getProducts(page = 1, limit = 5) {
+    async getProducts(page = 1, limit = 5, sort, filter) {
         try {
-            const response = await modelProd.paginate({}, { page, limit })
-            return response
+            if (sort == 'asc' || sort == 'desc') {
+                const response = await modelProd.paginate(filter != undefined ? {cat: filter} : {}, { page, limit, sort: {price: sort} })
+                return response
+            } else if (sort != 'asc' && sort != 'desc') {
+                const response = await modelProd.paginate(filter != undefined ? {cat: filter} : {}, { page, limit })
+                return response
+            }
         } catch (err) { console.log(err) }
     }
 
