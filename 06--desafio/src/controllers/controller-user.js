@@ -9,9 +9,9 @@ export class ControllerUsers {
             const newDoc = req.body
             const newDocPost = await svcUser.createUserSvc(newDoc)
             if (newDocPost) {
-                res.status(200).json({ message: '(i) User created successfully!', newUser: newDocPost })
+                res.redirect('/views/register-ok')
             } else {
-                res.status(400).json({ message: '(!) Something went wrong.' })
+                res.redirect('/views/register-err')
             }
         } catch (err) { next(err) }
     }
@@ -23,9 +23,10 @@ export class ControllerUsers {
             if (user) {
                 req.session.email = credentials.email
                 req.session.password = credentials.password
-                res.status(200).json({ message: '(i) User log-in successful!' })
+                req.session.firstname = user.firstname
+                res.redirect('/views/login-ok')
             } else {
-                res.status(400).json({ message: '(!) Invalid e-mail or password.' })
+                res.redirect('/views/login-err')
             }
         } catch (err) { next(err) }
     }

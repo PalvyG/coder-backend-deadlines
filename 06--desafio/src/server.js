@@ -19,10 +19,10 @@ const sessionConfig = {
     secret: 'cookieMonster',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 10000 },
+    cookie: { maxAge: 30000 },
     store: new MongoStore({
         mongoUrl: 'mongodb+srv://pabloalvarez4284:admin4284@personalcluster.5dvocjj.mongodb.net/?retryWrites=true&w=majority',
-        ttl: 10
+        ttl: 30
     }),
 }
 
@@ -51,13 +51,6 @@ const http = app.listen(port, () => {
 const io = new Server(http)
 
 io.on('connection', async (socket) => {
-    console.log('User connected to socket (ID: ', socket.id, ')');
-    socket.on('disconnect', () => {
-        console.log('User disconnected from socket (ID:', socket.id, ')');
-    })
-    socket.on('message', (message) => {
-        console.log(message)
-    })
     const productsGet = await daoProd.getProducts(1, 15);
     const productsGetArray = productsGet.docs
     socket.emit('productsArray', productsGetArray);
@@ -65,8 +58,5 @@ io.on('connection', async (socket) => {
         await daoProd.addProduct(prod);
         const arrayUpdate = await daoProd.getProducts();
         socket.emit('arrayUpdate', arrayUpdate);
-        socket.on('update', (update) => {
-            console.log(update);
-        })
     })
 })

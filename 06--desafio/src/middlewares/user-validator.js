@@ -1,7 +1,6 @@
 export const userValidator = (req, res, next) => {
     try {
         const user = req.body;
-        console.log(user)
         if (user.firstname !== undefined && user.lastname !== undefined && user.email !== undefined && user.password !== undefined ) {
             if(user.age >= 18) {
                 next()

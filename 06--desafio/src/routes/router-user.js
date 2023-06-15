@@ -6,6 +6,6 @@ const ctrlUser = new ControllerUsers();
 const router = Router();
 
 router.post('/register', userValidator, ctrlUser.createUserCtrl);
-router.put('/login', ctrlUser.loginUserCtrl);
+router.post('/login', ctrlUser.loginUserCtrl);
 
 export default router;

@@ -12,7 +12,6 @@ socket.on('productsArray', (array) => {
         productsArray += `<li id="product__${p.id}">${p.title} - $${p.price} (${p.stock} uds.)</li>`;
     })
     products.innerHTML = productsArray;
-    socket.emit('message', {message: 'Products recieved correctly in socket'})
 })
 
 form.onsubmit = (e) =>{
@@ -31,7 +30,6 @@ form.onsubmit = (e) =>{
             productsArray += `<li id="product__${p.id}">${p.title} - $${p.price} (${p.stock} uds.)</li>`;
         })
         products.innerHTML = productsArray;
-        socket.emit('update', {message: 'Products updated correctly from socket'})
     })
 }
 
