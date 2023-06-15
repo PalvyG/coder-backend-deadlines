@@ -9,8 +9,12 @@ router.get('/products-realtime', async (req, res) => {
     res.render('products-realtime')
 });
 
-router.get('/products-static', async (req, res) => {
-    res.render('products-static')
+router.get('/register', async (req, res) => {
+    res.render('register')
+});
+
+router.get('/login', async (req, res) => {
+    res.render('login')
 });
 
 export default router;

@@ -21,8 +21,23 @@ h1, h2, .title {
     gap: 10px;
 }
 
+#form__register, #form__login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 50px;
+}
+
+#form__register__container, #form__login__container {
+    max-width: fit-content;
+}
+
 #form__prods label {
     width: 75px;
+}
+
+#form__register label, #form__login label {
+    width: 150px;
 }
 
 #form__prods input {
@@ -30,9 +45,21 @@ h1, h2, .title {
     width: 260px;
 }
 
+#form__register input, #form__login input{
+    height: 20px;
+    width: 400px;
+}
+
 #add__prod {
     margin-top: 25px;
     width: 100% !important
+}
+
+#create__user, #login__user {
+    margin-top: 5px;
+    height: 25px !important;
+    width: 200px !important;
+    align-self: flex-end;
 }
 
 #footer {

@@ -58,7 +58,9 @@ io.on('connection', async (socket) => {
     socket.on('message', (message) => {
         console.log(message)
     })
-    socket.emit('productsArray', await daoProd.getProducts());
+    const productsGet = await daoProd.getProducts(1, 15);
+    const productsGetArray = productsGet.docs
+    socket.emit('productsArray', productsGetArray);
     socket.on('newProduct', async (prod) => {
         await daoProd.addProduct(prod);
         const arrayUpdate = await daoProd.getProducts();
