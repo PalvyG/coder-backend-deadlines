@@ -28,7 +28,11 @@ const sessionConfig = {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session(sessionConfig))
+app.use(session(sessionConfig));
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
 app.use(cookieParser())
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');

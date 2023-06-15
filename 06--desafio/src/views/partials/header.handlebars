@@ -1,10 +1,16 @@
-<div id="header">
+<div class="flex__container" id="header">
     <ul class="flex__container">
         <li>Home</li>
         <li>Products</li>
         <li>About Us</li>
     </ul>
-    <p id="header__username"></p>
+    <div id="header__username">
+        {{#if session.firstname}}
+        <p id="header__firstname">Welcome, {{session.firstname}}!</p>
+        {{else}}
+        <button id="header__login" onclick="location.href='/views/login'">Log-In</button>
+        {{/if}}
+    </div>
 </div>
 
 <script src="/js/header-username.js"></script>

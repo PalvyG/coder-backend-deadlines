@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     gap: 50px;
-    justify-content: start;
+    justify-content: space-between;
 }
 
 h1,
@@ -16,6 +16,15 @@ a {
     color: blue !important;
     text-decoration: underline !important;
     cursor: auto !important;
+}
+
+#header__username {
+    flex-direction: flex-end;
+}
+
+#header__login, #header__firstname {
+    margin-right: 63vw;
+    margin-top: 15px;
 }
 
 .flex__container {
