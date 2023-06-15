@@ -1,8 +1,9 @@
 export const userValidator = (req, res, next) => {
     try {
         const user = req.body;
-        if (user.firstname !== undefined && user.lastname !== undefined && user.age !== undefined && user.email !== undefined && user.password !== undefined ) {
-            if(age >= 18) {
+        console.log(user)
+        if (user.firstname !== undefined && user.lastname !== undefined && user.email !== undefined && user.password !== undefined ) {
+            if(user.age >= 18) {
                 next()
             } else {
                 res.status(400).json({message:'(!) You must be at least 18 years old to register.'})

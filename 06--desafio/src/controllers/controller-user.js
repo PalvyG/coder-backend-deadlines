@@ -7,9 +7,9 @@ export class ControllerUsers {
     async createUserCtrl(req, res, next) {
         try {
             const newDoc = req.body
-            const newDocPost = await svcUser.createUserSvcUser(newDoc)
+            const newDocPost = await svcUser.createUserSvc(newDoc)
             if (newDocPost) {
-                res.status(200).json({ message: '(i) User created successfully!' })
+                res.status(200).json({ message: '(i) User created successfully!', newUser: newDocPost })
             } else {
                 res.status(400).json({ message: '(!) Something went wrong.' })
             }
