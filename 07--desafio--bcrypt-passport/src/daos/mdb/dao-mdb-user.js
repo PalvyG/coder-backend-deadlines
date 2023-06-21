@@ -11,7 +11,7 @@ export class DaoMDBUser {
                     const newAdmin = await userModel.create({ ...user, password: createHash(user.password), role: 'admin' })
                     return newAdmin
                 } else {
-                    const newUser = await userModel.create({ user, password: createHash(user.password) });
+                    const newUser = await userModel.create({ ...user, password: createHash(user.password) });
                     return newUser
                 }
             }

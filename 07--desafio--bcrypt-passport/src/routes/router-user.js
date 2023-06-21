@@ -6,10 +6,10 @@ import passport from 'passport'
 const ctrlUser = new ControllerUsers();
 const router = Router();
 
-// router.post('/register', passport.authenticate('register'), ctrlUser.registerResponse)
-// router.post('/login', passport.authenticate('login'), ctrlUser.loginResponse)
+router.post('/register', passport.authenticate('register',{failureRedirect:'/views/register-err'}), ctrlUser.registerResponse)
+router.post('/login', passport.authenticate('login',{failureRedirect:'/views/login-err'}), ctrlUser.loginResponse)
 
-router.post('/register', userValidator, ctrlUser.createUserCtrl);
-router.post('/login', ctrlUser.loginUserCtrl);
+// router.post('/register', userValidator, ctrlUser.createUserCtrl);
+// router.post('/login', ctrlUser.loginUserCtrl);
 
 export default router;

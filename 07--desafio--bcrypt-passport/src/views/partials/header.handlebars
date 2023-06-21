@@ -5,8 +5,8 @@
         <li>About Us</li>
     </ul>
     <div id="header__username">
-        {{#if session.firstname}}
-        <p id="header__firstname">Welcome, {{session.firstname}}!</p>
+        {{#if session.user.firstname}}
+        <p id="header__firstname">Welcome, {{session.user.firstname}}!</p>
         {{else}}
         <button id="header__login" onclick="location.href='/views/login'">Log-In</button>
         {{/if}}
