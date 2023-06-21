@@ -1,13 +1,15 @@
 import './db/db.js'
+import './passport/passport-local.js'
 import express from 'express';
 import handlebars from 'express-handlebars';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import passport from 'passport';
 import productsRouter from './routes/router-prod.js';
 import cartsRouter from './routes/router-cart.js';
 import usersRouter from './routes/router-user.js';
 import viewsRouter from './routes/router-views.js';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
 import { daoProd } from './services/service-prod.js'; 
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
@@ -34,6 +36,8 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(cookieParser())
+app.use(passport.initialize());
+app.use(passport.session(sessionConfig));
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');

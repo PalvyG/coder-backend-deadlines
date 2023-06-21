@@ -1,8 +1,31 @@
 import { ServiceUsers } from "../services/service-user.js";
-const svcUser = new ServiceUsers();
+import { DaoMDBUser } from "../daos/mdb/dao-mdb-user.js";
+const userDao = new DaoMDBUser()
+const svcUser = new ServiceUsers()
 
 export class ControllerUsers {
     constructor() { }
+
+    async registerResponse(req, res, next) {
+        try {
+            res.redirect('/views/register-ok')
+        } catch (err) { next(err) }
+    }
+
+    async loginResponse(req, res, next) {
+        try {
+            const user = await userDao.getUserById(req.session.passport.user)
+            const {firstname, lastname, email, age, role} = user
+            req.session.user = {
+                firstname,
+                lastname,
+                email,
+                age,
+                role
+            }
+            res.redirect('/views/login-ok')
+        } catch (err) { next(err) }
+    }
 
     async createUserCtrl(req, res, next) {
         try {
