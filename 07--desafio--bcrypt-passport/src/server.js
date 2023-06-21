@@ -1,5 +1,6 @@
-import './db/db.js'
-import './passport/passport-local.js'
+import './db/db.js';
+import './passport/passport-local.js';
+import './passport/passport-github.js';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import session from 'express-session';

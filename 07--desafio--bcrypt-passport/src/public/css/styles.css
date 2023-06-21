@@ -1,8 +1,12 @@
 #header {
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 20px;
     justify-content: space-between;
+}
+
+#header ul li {
+    min-width: 75px;
 }
 
 h1,
@@ -22,7 +26,7 @@ a {
     flex-direction: flex-end;
 }
 
-#header__login, #header__firstname {
+#header__login, #header__github, #header__firstname {
     margin-right: 63vw;
     margin-top: 15px;
 }

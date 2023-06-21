@@ -6,7 +6,8 @@ const userSchema = new Schema ({
     age: {type: Number, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    role: {type: String, default: 'user'}
+    role: {type: String, default: 'user'},
+    access: {type: String, default: 'local'}
 })
 
 export const userModel = model('users', userSchema);

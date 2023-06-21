@@ -35,8 +35,9 @@ const loginStrat = new LocalStrat(stratOptions, login)
 passport.use('register', registerStrat)
 passport.use('login', loginStrat)
 
-passport.serializeUser((user, done)=>{
-    done(null, user._id);
+passport.serializeUser(async (user, done)=>{
+    const usuario = await userDao.getUserById(user._id)
+    done(null, usuario._id);
 });
 
 passport.deserializeUser(async(id, done)=>{

@@ -27,6 +27,21 @@ export class ControllerUsers {
         } catch (err) { next(err) }
     }
 
+    async githubResponse(req, res, next) {
+        try {
+            const {firstname, lastname, email, age, role, access} = req.user
+            req.session.user = {
+                firstname,
+                lastname,
+                email,
+                age,
+                role,
+                access
+            }
+            res.redirect('/views/login-ok')
+        } catch (err) { next(err) }
+    }
+
     async createUserCtrl(req, res, next) {
         try {
             const newDoc = req.body

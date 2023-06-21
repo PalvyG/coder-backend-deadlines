@@ -9,6 +9,7 @@
         <p id="header__firstname">Welcome, {{session.user.firstname}}!</p>
         {{else}}
         <button id="header__login" onclick="location.href='/views/login'">Log-In</button>
+        <button id="header__github" onclick="location.href='/u/github'">GitHub</button>
         {{/if}}
     </div>
 </div>
