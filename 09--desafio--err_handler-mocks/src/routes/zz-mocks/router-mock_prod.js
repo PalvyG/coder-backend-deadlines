@@ -6,6 +6,6 @@ const router = Router();
 
 router.get('/', ctrlMockProd.getMockProdCtrl)
 router.post('/', ctrlMockProd.addMockProdCtrl)
-router.delete('/', ctrlMockProd.deleteMockProdsCtrl);
+router.delete('/', ctrlMockProd.deleteMockProdsCtrl)
 
 export default router

@@ -12,6 +12,7 @@ import usersRouter from './routes/router-user.js';
 import viewsRouter from './routes/router-views.js';
 import cookieParser from 'cookie-parser';
 import { __dirname } from './utils.js';
+import { errHandler } from './middlewares/error-handler.js';
 import { Server } from 'socket.io';
 import 'dotenv/config'
 import factory from './persistence/factory.js';
@@ -50,6 +51,7 @@ app.use('/mock_products', mockProdRouter)
 app.use('/carts', cartsRouter)
 app.use('/views', viewsRouter)
 app.use('/u', usersRouter)
+app.use(errHandler)
 
 const http = app.listen(port, () => {
     try {
