@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { winlog } from '../../../loggers/loggers.js';
 const path = './products.json'
 
 export class DaoFSProduct {
@@ -23,7 +24,7 @@ export class DaoFSProduct {
             productsFile.push(obj)
             await fs.promises.writeFile(path, JSON.stringify(productsFile))
             return obj
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getProducts() {
@@ -33,7 +34,7 @@ export class DaoFSProduct {
                 const productsJS = JSON.parse(products)
                 return productsJS
             } else { return [] }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getProductById(id) {
@@ -42,7 +43,7 @@ export class DaoFSProduct {
             const productsJS = JSON.parse(products)
             const foundProduct = productsJS.find((product) => product.id === id)
             if (foundProduct) return foundProduct
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async updateProduct(id, obj) {
@@ -54,7 +55,7 @@ export class DaoFSProduct {
                 productsJS[indexFound] = { id, ...obj }
                 await fs.promises.writeFile(path, JSON.stringify(productsJS))
             } else return `Error: Could not find product with specified ID (ID: ${id})`
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteProduct(id) {
@@ -68,7 +69,7 @@ export class DaoFSProduct {
             }
             const productsFile = await this.getProducts();
             await fs.promises.writeFile(path, JSON.stringify(productsFile));
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteAllProducts() {
@@ -76,7 +77,7 @@ export class DaoFSProduct {
             if(fs.existsSync(path)){
                 await fs.promises.unlink(path)
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }
 

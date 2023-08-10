@@ -1,4 +1,5 @@
 import factory from "../persistence/factory.js";
+import { winlog } from "../loggers/loggers.js";
 const { daoUser } = factory
 
 export const cartBodyValidation = async (req, res, next) => {
@@ -12,7 +13,7 @@ export const cartBodyValidation = async (req, res, next) => {
         } else {
             next();
         }
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.error(err) }
 }
 
 export const cartUserValidation = async (req, res, next) => {
@@ -28,5 +29,5 @@ export const cartUserValidation = async (req, res, next) => {
         } else {
             res.status(400).json({ message: "(!) You must be logged in as an administrator to access this endpoint." })
         }
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.error(err) }
 }

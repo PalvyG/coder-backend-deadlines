@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { winlog } from '../../../loggers/loggers.js';
 const pathCarts = './carts.json'
 const pathProducts = './products.json'
 
@@ -24,7 +25,7 @@ export class DaoFSCart {
             cartsFile.push(cart)
             await fs.promises.writeFile(pathCarts, JSON.stringify(cartsFile))
             return cart
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getCarts() {
@@ -34,7 +35,7 @@ export class DaoFSCart {
                 const cartsJS = JSON.parse(carts)
                 return cartsJS
             } else return []
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getCartById(id) {
@@ -43,7 +44,7 @@ export class DaoFSCart {
             const cartsJS = JSON.parse(carts)
             const foundCart = cartsJS.find((cart) => cart.id === id)
             if (foundCart) return foundCart
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async addToCart(cid, pid) {
@@ -70,7 +71,7 @@ export class DaoFSCart {
                     }
                 } else return 'prod_404'
             } else return 'cart_404'
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteCart(id) {
@@ -84,7 +85,7 @@ export class DaoFSCart {
             }
             const cartsFile = await this.getCarts();
             await fs.promises.writeFile(pathCarts, JSON.stringify(cartsFile));
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteAllCart() {
@@ -92,6 +93,6 @@ export class DaoFSCart {
             if (fs.existsSync(pathCarts)) {
                 await fs.promises.unlink(pathCarts)
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }

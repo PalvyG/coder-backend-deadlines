@@ -1,3 +1,5 @@
+import { winlog } from "../loggers/loggers.js";
+
 export const productValidator = (req, res, next) => {
     try {
         const prod = req.body;
@@ -9,5 +11,5 @@ export const productValidator = (req, res, next) => {
                 details: "(i) Product must contain the following properties: title, desc, price, stock, cat, status, code."
             })
         }
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.warning(err) }
 }

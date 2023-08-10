@@ -1,5 +1,6 @@
 import { modelMockProd } from "../models/zz-mocks/model-mock_prod.js";
 import { faker } from '@faker-js/faker'
+import { winlog } from "../../../../loggers/loggers.js";
 
 export class DaoMDBMockProd {
     constructor() { }
@@ -19,19 +20,19 @@ export class DaoMDBMockProd {
             }
             const result = await modelMockProd.create(mockProdArr)
             return result
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 
     async getMockProds() {
         try {
             const result = await modelMockProd.find({})
             return result
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 
     async deleteMockProds() {
         try {
             await modelMockProd.deleteMany({})
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 }

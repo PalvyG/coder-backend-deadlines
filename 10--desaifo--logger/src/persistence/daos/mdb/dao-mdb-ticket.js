@@ -1,4 +1,5 @@
 import { modelTicket } from "./models/model-ticket.js";
+import { winlog } from "../../../loggers/loggers.js";
 
 export class DaoMDBTicket {
     constructor() { }
@@ -6,7 +7,7 @@ export class DaoMDBTicket {
     async getAllTickets() {
         try {
             return await modelTicket.find({})
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getUserTicket(email) {
@@ -15,7 +16,7 @@ export class DaoMDBTicket {
                 purchaser: email
             })
             return arrTicket
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async createTicket(ticket) {
@@ -25,6 +26,6 @@ export class DaoMDBTicket {
                 cart: ticket.cart
             })
             return newTicket
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }

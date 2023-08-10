@@ -18,7 +18,7 @@ const register = async (req, email, password, done) => {
             const newUser = await userDao.createUser(req.body);
             return done(null, newUser);
         }
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.error(err) }
 }
 
 const login = async (req, email, password, done) => {
@@ -26,7 +26,7 @@ const login = async (req, email, password, done) => {
         const user = {email, password}
         const loginUser = await userDao.loginUser(user)
         return done(null, loginUser)
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.error(err) }
 }
 
 const registerStrat = new LocalStrat(stratOptions, register)

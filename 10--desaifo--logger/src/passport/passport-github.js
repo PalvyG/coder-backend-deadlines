@@ -48,7 +48,7 @@ const auth = async (accessToken, refreshToken, profile, done) => {
             const result = await userDao.createUser(newUser)
             return done(null, result)
         } else return done(null, findUser)
-    } catch (err) { console.log(err) }
+    } catch (err) { winlog.error(err) }
 }
 
 const githubAuthStrat = new GithubStrat(stratOptions, auth)

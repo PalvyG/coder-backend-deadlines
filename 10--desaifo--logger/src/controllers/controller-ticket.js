@@ -1,6 +1,7 @@
 import { RepoTicket } from "../repository/repo-ticket.js";
 import { newTicketCode } from "../utils.js";
 import factory from "../persistence/factory.js";
+import { winlog } from "../loggers/loggers.js";
 const { daoUser, daoCart } = factory
 const repoTicket = new RepoTicket()
 
@@ -11,7 +12,10 @@ export class ControllerTicket {
         try {
             const response = await repoTicket.getAllTickets()
             res.status(200).json(response)
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.err(err)
+            next(err)
+        }
     }
 
     async getUserTicketCtrl(req, res, next) {
@@ -27,7 +31,10 @@ export class ControllerTicket {
             } else if (arrTicket.length > 0) {
                 res.status(200).json({ message: "(i) Tickets retrieved successfully.", tickets: arrTicket })
             } else res.status(500).json({ message: "(!) Something went wrong.", error: "(i) Internal server error." })
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async createTicketCtrl(req, res, next) {
@@ -37,7 +44,7 @@ export class ControllerTicket {
             const newDate = new Date()
             const currDate = newDate.toUTCString()
             let cartAmount = 0;
-            userCart.products.forEach((prod) =>{
+            userCart.products.forEach((prod) => {
                 cartAmount += prod.amount
             });
             const ticket = {
@@ -49,6 +56,9 @@ export class ControllerTicket {
             }
             const response = await repoTicket.createTicket(ticket)
             res.status(200).json({ message: "(i) Ticket created successfully.", ticket: response })
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 }

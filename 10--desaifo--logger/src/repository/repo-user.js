@@ -1,4 +1,5 @@
 import factory from '../persistence/factory.js';
+import { winlog } from '../loggers/loggers.js';
 const { daoUser } = factory
 
 export class RepoUser {
@@ -8,13 +9,13 @@ export class RepoUser {
         try {
             const newDoc = await daoUser.createUser(user)
             return newDoc
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async loginUserSvc(user) {
         try {
             const doc = await daoUser.loginUser(user)
             return doc
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }

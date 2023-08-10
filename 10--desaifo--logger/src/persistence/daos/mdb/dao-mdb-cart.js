@@ -1,5 +1,6 @@
 import { modelCart } from './models/model-cart.js'
 import { modelProd } from './models/model-prod.js'
+import { winlog } from '../../../loggers/loggers.js';
 
 export class DaoMDBCart {
     constructor() { }
@@ -8,21 +9,21 @@ export class DaoMDBCart {
         try {
             const response = await modelCart.create({});
             return response
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getCarts() {
         try {
             const response = await modelCart.find({});
             return response
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getCartById(id) {
         try {
             const response = await modelCart.findById({ _id: id });
             return response
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async addToCart(cid, pid, qty) {
@@ -64,7 +65,7 @@ export class DaoMDBCart {
             }
             const cartUpd = await modelCart.findById({ _id: cid });
             return cartUpd;
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async updateCart(id, arr) {
@@ -82,7 +83,7 @@ export class DaoMDBCart {
             })
             const cart = await modelCart.findById(id)
             return cart
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteProdFromCart(cid, pid) {
@@ -101,7 +102,7 @@ export class DaoMDBCart {
                 const cartUpd = await modelCart.findById({ _id: cid });
                 return cartUpd;
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteAllProdFromCart(id) {
@@ -114,6 +115,6 @@ export class DaoMDBCart {
             })
             const cart = await modelCart.findById(id)
             return cart
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }

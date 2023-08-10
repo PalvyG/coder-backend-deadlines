@@ -1,4 +1,5 @@
 import { RepoProducts } from "../repository/repo-prod.js";
+import { winlog } from "../loggers/loggers.js";
 const repoProd = new RepoProducts();
 
 export class ControllerProducts {
@@ -9,7 +10,10 @@ export class ControllerProducts {
             const newDoc = req.body
             const newDocPost = await repoProd.addProdSvc(newDoc)
             res.status(200).json({ message: "(i) Product added successfully!", product: newDocPost })
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async getProdCtrl(req, res, next) {
@@ -34,7 +38,10 @@ export class ControllerProducts {
                     nextPageLink
                 }
             });
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async getProdByIdCtrl(req, res, next) {
@@ -43,7 +50,10 @@ export class ControllerProducts {
             const doc = await repoProd.getProdByIdSvc(pid)
             doc ? res.status(200).json({ message: '(i) Product found successfully!', product }) : res.status(404).json({ message: '(!) Product not found by the controller.' })
             res.json(doc)
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async updateProdCtrl(req, res, next) {
@@ -58,7 +68,10 @@ export class ControllerProducts {
             } else {
                 res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${pid}).` })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async deleteProdCtrl(req, res, next) {
@@ -71,13 +84,19 @@ export class ControllerProducts {
             } else {
                 res.status(404).json({ message: `(!) Could not find product with specified ID (ID: ${pid}).` })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async deleteAllProdCtrl(req, res, next) {
         try {
             await repoProd.deleteAllProdSvc()
             res.status(200).json({ message: "(i) All products deleted successfully" })
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 }

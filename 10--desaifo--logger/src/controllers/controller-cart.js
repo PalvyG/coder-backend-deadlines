@@ -1,4 +1,6 @@
 import { RepoCarts } from "../repository/repo-cart.js";
+import { winlog } from "../loggers/loggers.js";
+
 const repoCart = new RepoCarts();
 
 export class ControllerCarts {
@@ -14,7 +16,10 @@ export class ControllerCarts {
             } else {
                 res.status(200).json(docs)
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async getCartByIdCtrl(req, res, next) {
@@ -22,7 +27,10 @@ export class ControllerCarts {
             const { cid } = req.params
             const doc = await repoCart.getCartByIdSvc(cid)
             doc ? res.status(200).json({ message: '(i) Cart found successfully!', cart: doc }) : res.status(404).json({ message: '(!) Cart not found by the controller.' })
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async addToCartCtrl(req, res, next) {
@@ -42,7 +50,10 @@ export class ControllerCarts {
             } else {
                 res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${cid}).` })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async updateCartCtrl(req, res, next) {
@@ -55,7 +66,10 @@ export class ControllerCarts {
                 const cart = await repoCart.updateCartSvc(cid, arr)
                 res.status(200).json({ message: `(i) Cart updated successfully!`, update: cart })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async deleteProdFromCartCtrl(req, res, next) {
@@ -73,7 +87,10 @@ export class ControllerCarts {
             } else {
                 res.status(404).json({ message: `(!) Could not find cart with specified ID (ID: ${cid}).` })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async deleteAllProdFromCartCtrl(req, res, next) {
@@ -85,6 +102,9 @@ export class ControllerCarts {
                 const cart = await repoCart.deleteAllProdFromCartSvc(cid)
                 res.status(200).json({ message: `(i) All products removed from cart successfully.`, update: cart })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 }

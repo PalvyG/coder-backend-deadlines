@@ -1,6 +1,7 @@
 import { modelUser } from './models/model-user.js';
 import { modelCart } from './models/model-cart.js';
 import { createHash, isValidPassword } from '../../../utils.js';
+import { winlog } from '../../../loggers/loggers.js';
 
 export class DaoMDBUser {
     constructor() { }
@@ -18,7 +19,7 @@ export class DaoMDBUser {
                     return newUser
                 }
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async loginUser(user) {
@@ -29,7 +30,7 @@ export class DaoMDBUser {
                 const result = passValid ? findUser : false
                 return result
             } else { return null }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getUserByEmail(email) {
@@ -37,7 +38,7 @@ export class DaoMDBUser {
             const findUser = await modelUser.findOne({ email: email });
             const result = findUser ? findUser : false;
             return result
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.warning(err) }
     }
 
     async getUserById(id) {
@@ -45,6 +46,6 @@ export class DaoMDBUser {
             const findUser = await modelUser.findById(id);
             const result = findUser ? findUser : false;
             return result
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.warning(err) }
     }
 }

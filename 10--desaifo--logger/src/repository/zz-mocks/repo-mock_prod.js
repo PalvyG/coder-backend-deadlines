@@ -1,4 +1,5 @@
 import factory from '../../persistence/factory.js';
+import { winlog } from '../../loggers/loggers.js';
 const { daoMockProd } = factory
 
 export class RepoMockProd {
@@ -8,19 +9,19 @@ export class RepoMockProd {
         try {
             const newDocs = await daoMockProd.addMockProds(times);
             return newDocs
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 
     async getMockProdsSvc() {
         try {
             const docs = await daoMockProd.getMockProds();
             return docs
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 
     async deleteMockProdsSvc() {
         try {
             await daoMockProd.deleteMockProds()
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.debug(err) }
     }
 }

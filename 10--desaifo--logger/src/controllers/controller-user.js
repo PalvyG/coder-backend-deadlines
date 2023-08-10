@@ -1,8 +1,9 @@
 import { RepoUser } from "../repository/repo-user.js";
 import factory from '../persistence/factory.js';
-const { daoUser } = factory;
 import { DtoUser } from '../persistence/daos/mdb/dtos/dto-user.js';
+import { winlog } from "../loggers/loggers.js";
 const repoUser = new RepoUser()
+const { daoUser } = factory;
 
 export class ControllerUsers {
     constructor() { }
@@ -18,13 +19,19 @@ export class ControllerUsers {
                 req.session.userDTO = userDTO
                 res.render('profile')
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async registerResponse(req, res, next) {
         try {
             res.redirect('/views/register-ok')
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async loginResponse(req, res, next) {
@@ -40,7 +47,10 @@ export class ControllerUsers {
                 access
             }
             res.redirect('/views/login-ok')
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async githubResponse(req, res, next) {
@@ -55,7 +65,10 @@ export class ControllerUsers {
                 access
             }
             res.redirect('/views/login-ok')
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     // async logOutUserResponse(req, res, next) {
@@ -64,7 +77,10 @@ export class ControllerUsers {
     //             if (err) { return next(err); }
     //             res.redirect('/');
     //         });
-    //     } catch (err) { next(err) }
+    //     } catch (err) {
+    //        winlog.error(err)
+    //        next(err)
+    //    }
     // }
 
     async createUserCtrl(req, res, next) {
@@ -76,7 +92,10 @@ export class ControllerUsers {
             } else {
                 res.redirect('/views/register-err')
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async loginUserCtrl(req, res, next) {
@@ -88,7 +107,10 @@ export class ControllerUsers {
             } else {
                 res.redirect('/views/login-err')
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async loginUserApi(req, res, next) {
@@ -100,7 +122,10 @@ export class ControllerUsers {
             } else {
                 res.redirect('/views/login-err')
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 
     async getUserDtoCtrl(req, res, next) {
@@ -114,6 +139,9 @@ export class ControllerUsers {
                 req.session.userDTO = userDTO
                 res.status(200).json({ message: '(i) Profile:', profile: userDTO })
             }
-        } catch (err) { next(err) }
+        } catch (err) {
+            winlog.error(err)
+            next(err)
+        }
     }
 }

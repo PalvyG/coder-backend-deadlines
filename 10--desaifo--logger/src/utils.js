@@ -1,10 +1,6 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
-import winston from "winston";
-import "winston-mongodb";
-import 'dotenv/config';
-const { combine, printf, timestamp, colorize } = winston.format;
 
 export const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -57,95 +53,3 @@ export class HTTPResponse {
     });
   };
 };
-
-const customLevels = {
-  levels: {
-    fatal: 0,
-    error: 1,
-    warning: 2,
-    info: 3,
-    http: 4,
-    debug: 5
-  },
-  colors: {
-    fatal: 'bold white redBG',
-    error: 'red',
-    warning: 'yellow',
-    info: 'green',
-    http: 'blue',
-    debug: 'magenta',
-  }
-}
-
-const winTransports = () => {
-  if (process.env.PERSISTENCE == 'mdb') {
-    if (process.env.ENVIRONMENT == 'dev') {
-      const transports = [
-        winston.add(
-          new winston.transports.MongoDB({
-            options: { useUnifiedTopology: true },
-            db: process.env.MONGODB_URL,
-            collection: "logs",
-            tryReconnect: true,
-            level: "error",
-          })
-        ),
-        new winston.transports.Console({ level: "debug" }),
-      ]
-      return transports
-    } else if (process.env.ENVIRONMENT == 'prod') {
-      const transports = [
-        winston.add(
-          new winston.transports.MongoDB({
-            options: { useUnifiedTopology: true },
-            db: process.env.MONGODB_URL,
-            collection: "logs",
-            tryReconnect: true,
-            level: "error",
-          })
-        ),
-        new winston.transports.Console({ level: "info" }),
-      ]
-      return transports
-    }
-  } else if (process.env.PERSISTENCE == 'fs') {
-    if (process.env.ENVIRONMENT == 'dev') {
-      const transports = [
-        new winston.transports.Console({ level: "debug" }),
-      ]
-      return transports
-    } else if (process.env.ENVIRONMENT == 'prod') {
-      const transports = [
-        new winston.transports.Console({ level: "info" }),
-        new winston.transports.File({
-          filename: "./logs/logs.log",
-          level: "error",
-        }),
-      ]
-      return transports
-    }
-  }
-}
-
-const logConfig = {
-  transports: winTransports(),
-  format: combine(
-    timestamp({
-      format: 'MMM-DD-YYYY HH:mm:ss'
-    }),
-    colorize(winston.addColors(customLevels.colors)),
-    printf((info) => {
-      let spaces = []
-      for (let i = info.level.length; i < 17; i++) {
-        spaces.push(" ")
-      }
-      spaces = spaces.join("")
-      if (info.level.includes('fatal')) {
-        return `${info.level}    | ${[info.timestamp]} | ${info.message}`
-      } else return `${info.level} ${spaces} | ${[info.timestamp]} | ${info.message}`
-    })
-  ),
-  levels: customLevels.levels,
-};
-
-export const logger = winston.createLogger(logConfig);

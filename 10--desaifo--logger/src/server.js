@@ -7,6 +7,7 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import productsRouter from './routes/router-prod.js';
 import mockProdRouter from './routes/zz-mocks/router-mock_prod.js'
+import mockLogsRouter from './routes/zz-mocks/router-mock-logs.js';
 import cartsRouter from './routes/router-cart.js';
 import usersRouter from './routes/router-user.js';
 import viewsRouter from './routes/router-views.js';
@@ -16,6 +17,7 @@ import { errHandler } from './middlewares/error-handler.js';
 import { Server } from 'socket.io';
 import 'dotenv/config'
 import factory from './persistence/factory.js';
+import { winlog } from './loggers/loggers.js';
 const { daoProd } = factory
 
 const app = express();
@@ -48,17 +50,19 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use('/products', productsRouter)
 app.use('/mock_products', mockProdRouter)
+app.use('/mock_logs', mockLogsRouter)
 app.use('/carts', cartsRouter)
 app.use('/views', viewsRouter)
 app.use('/u', usersRouter)
+app.use
 app.use(errHandler)
 
 const http = app.listen(port, () => {
     try {
-        console.log(`Listening on port ${port}`);
+        winlog.info(`Listening on port ${port}`);
     } catch (err) {
         res.status(400).json({ message: err.message })
-        console.log(err)
+        winlog.fatal(err)
     }
 })
 

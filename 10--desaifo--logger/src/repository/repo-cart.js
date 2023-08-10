@@ -1,4 +1,5 @@
 import factory from '../persistence/factory.js';
+import { winlog } from '../loggers/loggers.js';
 const { daoCart } = factory
 
 export class RepoCarts {
@@ -8,7 +9,7 @@ export class RepoCarts {
         try {
             const docs = await daoCart.getCarts();
             return docs
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async getCartByIdSvc(id) {
@@ -16,7 +17,7 @@ export class RepoCarts {
             const doc = await daoCart.getCartById(id);
             if (!doc) throw new Error(`(!) Cart not found by the service.`)
             else return doc
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async addToCartSvc(cid, pid, qty) {
@@ -28,7 +29,7 @@ export class RepoCarts {
                 const newDoc = await daoCart.addToCart(cid, pid, qty);
                 return newDoc
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async updateCartSvc(id, arr) {
@@ -38,7 +39,7 @@ export class RepoCarts {
                 const newDoc = await daoCart.updateCart(id, arr);
                 return newDoc
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteProdFromCartSvc(cid, pid) {
@@ -50,7 +51,7 @@ export class RepoCarts {
                 const newDoc = await daoCart.deleteProdFromCart(cid, pid);
                 return newDoc
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 
     async deleteAllProdFromCartSvc(id) {
@@ -60,6 +61,6 @@ export class RepoCarts {
                 const newDoc = await daoCart.deleteAllProdFromCart(id);
                 return newDoc
             }
-        } catch (err) { console.log(err) }
+        } catch (err) { winlog.error(err) }
     }
 }
