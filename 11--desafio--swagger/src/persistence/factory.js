@@ -1,5 +1,4 @@
 import { DaoMDBProduct } from './daos/mdb/dao-mdb-prod.js'
-import { DaoMDBMockProd } from './daos/mdb/zz-mocks/dao-mdb-mock_prod.js'
 import { DaoMDBUser } from './daos/mdb/dao-mdb-user.js'
 import { DaoMDBCart } from './daos/mdb/dao-mdb-cart.js'
 import { DaoMDBTicket } from './daos/mdb/dao-mdb-ticket.js'
@@ -12,7 +11,6 @@ let daoProd;
 let daoCart;
 let daoUser;
 let daoTicket;
-let daoMockProd;
 
 const persistence = process.env.PERSISTENCE
 
@@ -24,7 +22,6 @@ switch (persistence) {
     case 'mdb':
         await initMDB()
         daoProd = new DaoMDBProduct()
-        daoMockProd = new DaoMDBMockProd()
         daoCart = new DaoMDBCart()
         daoUser = new DaoMDBUser()
         daoTicket = new DaoMDBTicket()
@@ -32,11 +29,10 @@ switch (persistence) {
     default:
         await initMDB()
         daoProd = new DaoMDBProduct()
-        daoMockProd = new DaoMDBMockProd()
         daoCart = new DaoMDBCart()
         daoUser = new DaoMDBUser()
         daoTicket = new DaoMDBTicket()
         break;
 }
 
-export default { daoProd, daoMockProd, daoCart, daoUser, daoTicket }
+export default { daoProd, daoCart, daoUser, daoTicket }

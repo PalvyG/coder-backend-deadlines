@@ -11,7 +11,6 @@ router.post('/loginapi', passport.authenticate('login',{failureRedirect:'/views/
 router.get('/github', passport.authenticate('github',{scope:['user:email']}))
 router.get('/github-ok', passport.authenticate('github',{failureRedirect:'/views/login-err'}), ctrlUser.githubResponse)
 router.get('/profile', ctrlUser.getUserDtoCtrl)
-router.get('/current', ctrlUser.getUserDtoCtrl)
 // router.delete('/logout', ctrlUser.logOutUserResponse)
 
 export default router;

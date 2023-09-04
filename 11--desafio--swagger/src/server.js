@@ -55,8 +55,6 @@ app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use('/products', productsRouter)
-app.use('/mock_products', mockProdRouter)
-app.use('/mock_logs', mockLogsRouter)
 app.use('/carts', cartsRouter)
 app.use('/views', viewsRouter)
 app.use('/u', usersRouter)
